@@ -2,6 +2,18 @@
 
 #take simple knapsack input
 
+read -p "Enter the size of the simple knapsack: " simpleKnapsackSize
+
+for (( i=0 ; i<${simpleKnapsackSize}; i++ )); do
+
+read -p "" simpleKnapsackValue 
+
+simpleKnapsack=("${simpleKnapsack[@]}" $simpleKnapsackValue)
+
+done
+
+echo ${simpleKnapsack[@]}
+
 #ensure that simple knapsack is superincreasing
 
 #calculate S sum
