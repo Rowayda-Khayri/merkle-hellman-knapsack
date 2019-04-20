@@ -4,19 +4,34 @@
 
 read -p "Enter the size of the simple knapsack: " simpleKnapsackSize
 
-for (( i=0 ; i<${simpleKnapsackSize}; i++ )); do
+for ((i=0; i<${simpleKnapsackSize}; i++)); do
 
-read -p "" simpleKnapsackValue 
+	read -p "Enter the superincreasing simple knapsack: " simpleKnapsackValue 
 
-simpleKnapsack=("${simpleKnapsack[@]}" $simpleKnapsackValue)
+	simpleKnapsack=( "${simpleKnapsack[@]}" $simpleKnapsackValue )
 
 done
 
-echo ${simpleKnapsack[@]}
+####echo ${simpleKnapsack[@]}
 
 #ensure that simple knapsack is superincreasing
 
+for (( i=0,previousValuesSum=0; i<${simpleKnapsackSize}; i++ )); do
+
+	if [[ ${simpleKnapsack[i]} -gt ${previousValuesSum} ]]; then
+
+		#echo "prev is $previousValuesSum "
+		(( previousValuesSum+=simpleKnapsack[i] ))
+		#echo "inside if"
+		#echo "prev is $previousValuesSum "
+	else
+		echo "Simple knapsack should be superincreasing.."
+	fi	
+	
+done
 #calculate S sum
+
+echo " S sum is $previousValuesSum"
 
 #take w : w in [1, S sum]
 
