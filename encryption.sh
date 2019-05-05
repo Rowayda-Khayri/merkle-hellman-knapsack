@@ -1,41 +1,62 @@
 #!/bin/bash
 
-#take simple knapsack input
+superincreasing=0 #flag to check whether the simple knapsack is superincreasing or not
 
-read -p "Enter the size of the simple knapsack: " simpleKnapsackSize
+while [ $superincreasing -eq 0 ]; do
 
-for ((i=0; i<${simpleKnapsackSize}; i++)); do
+	#take simple knapsack input
 
-	read -p "Enter the superincreasing simple knapsack: " simpleKnapsackValue 
+	read -p "Enter the size of the simple knapsack: " simpleKnapsackSize
 
-	simpleKnapsack=( "${simpleKnapsack[@]}" $simpleKnapsackValue )
+	for ((i=0; i<${simpleKnapsackSize}; i++)); do
 
-done
+		read -p "Enter the superincreasing simple knapsack [$i] : " simpleKnapsackValue 
 
-####echo ${simpleKnapsack[@]}
+		#add value to array
+		simpleKnapsack=( "${simpleKnapsack[@]}" $simpleKnapsackValue )
 
-#ensure that simple knapsack is superincreasing
+	done
 
-for (( i=0,previousValuesSum=0; i<${simpleKnapsackSize}; i++ )); do
+	####echo ${simpleKnapsack[@]}
 
-	if [[ ${simpleKnapsack[i]} -gt ${previousValuesSum} ]]; then
+	#ensure that simple knapsack is superincreasing
 
-		#echo "prev is $previousValuesSum "
-		(( previousValuesSum+=simpleKnapsack[i] ))
-		#echo "inside if"
-		#echo "prev is $previousValuesSum "
-	else
-		echo "Simple knapsack should be superincreasing.."
-	fi	
+	for (( i=0,previousValuesSum=0; i<${simpleKnapsackSize}; i++ )); do
+
+		if [ ${simpleKnapsack[i]} -gt ${previousValuesSum} ]; then # the array is superincreasing till now
+			echo " i is $i"
+			echo "prev is $previousValuesSum "
+			#add current value to previousValuesSum
+			(( previousValuesSum+=simpleKnapsack[i] ))
+			####echo "inside if"
+			####echo "prev is $previousValuesSum "
+		else
+			echo "Simple knapsack should be superincreasing.."
+			break
+		fi	
 	
-done
-#calculate S sum
+		#if end of array reached, it's superincreasing
+		if [ $i -eq $(( simpleKnapsackSize - 1 )) ]; then
+			echo " Simple knapsack is superincreasing .. "
+			superincreasing=1
+		fi
 
-echo " S sum is $previousValuesSum"
+	done #end if do
+
+done # end while do
 
 #take w : w in [1, S sum]
 
+read -p "Enter w in range [1, $previousValuesSum] : " w 
+
 #ensure that w in [1, S sum]
+
+#if [ $w in [1..$previousValuesSum] ]; then
+#if [[ $w -le 1 -o $w -ge $previousValuesSum ]]; then
+if [ $w -le 1 -o $w -ge $previousValuesSum ]; then
+	echo " Not in range!"
+fi
+
 
 #take n : n > S sum and n is prime
 
