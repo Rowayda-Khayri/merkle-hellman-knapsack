@@ -8,8 +8,11 @@ while [ $superincreasing -eq 0 ]; do
 
 	read -p "Enter the size of the simple knapsack: " simpleKnapsackSize
 
-	for ((i=0; i<${simpleKnapsackSize}; i++)); do
+	#declare simpleKnapsack array
+	simpleKnapsack=()
 
+	for ((i=0; i<${simpleKnapsackSize}; i++)); do
+			
 		read -p "Enter the superincreasing simple knapsack [$i] : " simpleKnapsackValue 
 
 		#add value to array
